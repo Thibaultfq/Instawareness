@@ -66,3 +66,6 @@ typings/
 #todo: these should be moved to a safer place.
 *.cert
 *.key
+
+/.vscode
+.DS_Store
