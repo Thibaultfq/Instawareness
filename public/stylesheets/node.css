@@ -1,0 +1,236 @@
+/* insta feed */
+
+.insta {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  width: 100%;
+}
+.instawrap {
+  padding: 5px 45px;
+  padding-bottom: 20px;
+}
+.instawrap:nth-child(even) {
+  background-color: rgba(31, 96, 170, 0.25);
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+.instawrap:nth-child(odd) {
+  background-color: rgba(192, 160, 46, 0.25);
+}
+.instawrap.highlight {
+  background-color: #a8dadc;
+}
+.top-insta {
+  padding: 5px 16px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.top-insta img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+.top-insta .user {
+  margin-left: 10px;
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.friends .top-insta .user {
+  font-size: 1.2rem;
+}
+.friends .top-insta {
+  padding: 5px 0;
+}
+.dot {
+  cursor: pointer;
+  background-image: url("../images/f2eee39b755e.png");
+  background-repeat: no-repeat;
+  background-position: -434px -345px;
+  height: 16px;
+  width: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+  align-self: center;
+  right: 16px;
+  position: absolute;
+  text-align: right;
+}
+.post {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+/* .overlay {
+  background: rgba(0, 0, 0, 0.23);
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  -o-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.overlay:after {
+  content: "";
+  width: 600px;
+  height: 100%;
+  background: black;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  position: absolute;
+  left: 388px;
+  top: 0;
+  -moz-transform: skew(-45deg);
+  -webkit-transform: skew(-45deg);
+  -webkit-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  -o-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.overlay span {
+  background-image: url("../images/f2eee39b755e.png");
+  background-repeat: no-repeat;
+  background-position: -2px -53px;
+  height: 79px;
+  width: 88px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  -webkit-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  -o-transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.post:hover .overlay:after {
+  left: -600px;
+}
+.post:hover .overlay {
+  opacity: 1;
+}
+.post:hover .overlay span {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+} */
+.post img {
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
+.footer {
+  padding: 0 16px;
+}
+.react {
+  margin-top: 4px;
+  position: relative;
+}
+.react a {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.react a:last-child {
+  margin-right: 0;
+}
+.react .love {
+  background-image: url("../images/f2eee39b755e.png");
+  background-position: -408px -156px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+.react .comment {
+  background-image: url("../images/f2eee39b755e.png");
+  background-position: -408px -26px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+.react .save {
+  background-image: url("../images/f2eee39b755e.png");
+  background-repeat: no-repeat;
+  background-position: -104px -389px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+.caption {
+  color: #585858;
+  font-size: 13px;
+  margin: 16px 0;
+  max-height: 38px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+}
+.caption a {
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+.comment-section {
+  position: relative;
+  border-top: 1px solid #efefef;
+  padding: 26px 26px 26px 0;
+  margin-top: 4px;
+  overflow: hidden;
+}
+#cmnt {
+  outline: none;
+  overflow-x: scroll;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #262626;
+  width: 100%;
+  height: 18px;
+  max-height: 80px;
+  resize: none;
+}
+.dot02 {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+  cursor: pointer;
+  background-image: url("../images/f2eee39b755e.png");
+  background-repeat: no-repeat;
+  background-position: -434px -345px;
+  height: 16px;
+  width: 16px;
+}
+
+.insta a {
+  color: #262626;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+#overlap .btn.btn-link {
+  white-space: normal;
+}
+
+.footer {
+  padding-bottom: 5px;
+}

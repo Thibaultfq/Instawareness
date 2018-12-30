@@ -1,0 +1,23 @@
+<div class="col-md-2 d-flex align-items-center">
+    {{#if this.isExcludedFromTopStories}}
+    <h4>
+        <span class="badge badge-danger">Hidden <i class="far fa-eye-slash"></i></span>
+    </h4>
+    {{/if}}
+    {{#if this.isSameRanked}}
+    <h4>
+        <span class="badge badge-secondary">Same Rank <i class="fas fa-equals"></i></span>
+    </h4>
+    {{/if}}
+    {{#if this.isHigherRanked}}
+    <h4>
+        <span class="badge badge-success">Higher Rank:&nbsp;&nbsp;{{this.howMuchHigher}} <i class="fas fa-arrow-up"></i></span>
+    </h4>
+    {{/if}}
+    {{#if this.isLowerRanked}}
+    <h4>
+        <span class="badge badge-warning">Lower Rank:&nbsp;&nbsp;{{this.howMuchLower}} <i class="fas fa-arrow-down"></i></span>
+    </h4>
+    {{/if}}
+
+</div>

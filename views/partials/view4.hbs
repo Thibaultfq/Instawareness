@@ -1,0 +1,97 @@
+<div id="view2" class="container-fluid pb-5">
+    <div class="row pt-3 pb-4">
+        <div class="bg card col-md-9 mx-auto">
+            <div class="card-body">
+                <h5 class="card-title">Did you know, you might miss things? And others might miss yours?</h5>
+                <p class="card-text">When you open the instagram app and start scrolling, is the 20th post you see
+                    really the 20th? It is not. This means Instagram can 'hide' posts from you, simply by sorting them
+                    lower. This might sound weird since instagram's ranking algorithm only re-sorts and does not hide,
+                    but think about it this way. When you start scrolling for 1 minute and then close the app, you
+                    would've seen different posts during that minute if your feed wasn't sorted by an algorithm. This
+                    way you might miss posts, that are actually hidden to you in that visit. This can be avoided by
+                    scrolling far enough untill a message appears "you're all up to date". Since time is a scarce good
+                    for young people however, many people who don't scroll completely down might not see some posts at
+                    all. </p>
+            </div>
+        </div>
+    </div>
+    {{#if viewFour.allOverlap}}
+    <div class="row pt-3 pb-4">
+        <div class="bg card col-md-6 mx-auto">
+            <div class="card-body">
+                <h5 class="card-title">No hidden posts!</h5>
+                <p class="card-text">There seem to be no hidden posts when you should currently view the first
+                    {{viewFour.allPosts.length}} posts on your Instagram! Probably you've frequently opened Instagram
+                    the past hours. Because you've seen all posts ("you're all up to date"), recency will become the
+                    most important factor for the algorithm. This is why the non-algorithm list has the same ranking as
+                    the algortihm based list, which means these two are equal.</p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <div class="row pt-4">
+        <div class="col-md-6 mx-auto">
+            <div class="card mb-4">
+                <div class="card-header" id="overlap">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-secondary" type="button" data-toggle="collapse" data-target="#collapseOverlap"
+                            aria-expanded="true" aria-controls="collapseOverlap">
+                            From the total of {{viewFour.totalCountTopPosts}} posts returned by the ranking algorithm,
+                            {{viewFour.beginOverlap.topPosts.length}} items also appeared in the algorithm-free list of
+                            posts. This list is sorted by reverse chronological order. </br>Click here to view them
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOverlap" class="collapse" aria-labelledby="overlap">
+                    <div class="card-body">
+                        {{#times viewFour.beginOverlap.topPosts.length}}
+                        <div class="row">
+                            {{!-- {{#with (lookup @root.viewFour.beginOverlap.allPosts @this)}}
+                            {{> nodeMeta node.meta }}
+                            {{/with}} --}}
+                            {{#with (lookup @root.viewFour.beginOverlap.allPosts @this)}}
+                            {{> nodeOverlap node }}
+                            {{/with}}
+                            {{#with (lookup @root.viewFour.beginOverlap.topPosts @this)}}
+                            {{> nodeOverlap node }}
+                            {{/with}}
+                        </div>
+                        {{/times}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-md-2 col-md-4 pt-3 pb-1">
+            <h4 class="text-right">
+                Your feed as it would be without algorithm <i class="fas fa-sort-numeric-down"></i>
+            </h4>
+        </div>
+        <div class="col-md-4 pt-3 pb-1">
+            <h4>
+                Your feed as it is in the App <i class="fas fa-random"></i>
+            </h4>
+        </div>
+    </div>
+    {{!-- show the overlap but collapsed --}}
+
+
+    {{#times viewFour.allPosts.length}}
+    <div class="row">
+        {{#with (lookup @root.viewFour.allPosts @this)}}
+        {{> nodeMetaLeft node.meta }}
+        {{/with}}
+        {{#with (lookup @root.viewFour.allPosts @this)}}
+        {{> node node }}
+        {{/with}}
+        {{#with (lookup @root.viewFour.topPosts @this)}}
+        {{> node node }}
+        {{/with}}
+    </div>
+    {{/times}}
+
+</div>

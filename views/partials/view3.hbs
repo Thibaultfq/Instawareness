@@ -1,0 +1,69 @@
+<div>
+    <div class="container-fluid pt-3 ">
+        <div class="row pt-3 pb-4">
+            <div class="bg card col-md-9 mx-auto">
+                <div class="card-body">
+                    <h5 class="card-title">How close are you to friends, according to your digital traces in Instagram
+                        and Facebook?</h5>
+                    <p class="card-text">Based on view 3... </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center w-75 mx-auto">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-red">
+                        <h4 class="text-light">Ranked Lower</h4>
+                    </div>
+                    <div class="friends card-body mt-0">
+                        <ul class="list-unstyled mb-5">
+                            {{#each viewThree.friendsRankings.below}}
+                            <li class="top-insta">
+                                <img src='{{this.profile_pic_url}}'>
+                                <span class='user'>{{this.username}}</span>
+                                <span class='ml-2 badge badge-danger my-auto'>{{this.below}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-yellow">
+                        <h4 class="text-light">Ranked Equally</h4>
+                    </div>
+                    <div class="card-body mt-0">
+                        <ul class="list-unstyled mb-5">
+                            {{#each viewThree.friendsRankings.equal}}
+                            <li class="top-insta">
+                                <img src='{{this.profile_pic_url}}'>
+                                <span class='user'>{{this.username}}</span>
+                                <span class='ml-2 badge badge-warning my-auto'>{{this.equal}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-green">
+                        <h4 class="text-light">Ranked Higher</h4>
+                    </div>
+                    <div class="card-body mt-0">
+                        <ul class="list-unstyled mb-5">
+                            {{#each viewThree.friendsRankings.top}}
+                            <li class="top-insta">
+                                <img src='{{this.profile_pic_url}}'>
+                                <span class='user'>{{this.username}}</span>
+                                <span class='ml-2 badge badge-success my-auto'>{{this.top}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

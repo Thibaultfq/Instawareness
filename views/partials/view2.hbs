@@ -1,0 +1,40 @@
+<div class="container-fluid pb-5">
+    <div class="row pt-3 pb-4">
+        <div class="bg card col-md-9 mx-auto">
+            <div class="card-body">
+                <h5 class="card-title">Your Ranking Score: {{toPrecision viewTwo.spearman 2}}</h5>
+                <p class="card-text">Ranking score of </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-md-2 col-md-4 pt-3 pb-1">
+            <h4 class="text-right chronolist">
+                Your feed as it would be without algorithm <i class="fas fa-sort-numeric-down"></i>
+            </h4>
+        </div>
+        <div class="col-md-4 pt-3 pb-1">
+            <h4 class="algolist">
+                Your feed as it is in the App <i class="fas fa-random"></i>
+            </h4>
+        </div>
+    </div>
+
+
+
+    {{#times viewTwo.chronoPosts.length}}
+    <div class="row">
+        <div class="col-md-3"></div>
+        {{#with (lookup @root.viewTwo.chronoPosts @this)}}
+        {{> node node }}
+        {{/with}}
+        {{#with (lookup @root.viewTwo.topPosts @this)}}
+        {{> node node }}
+        {{/with}}
+        {{#with (lookup @root.viewTwo.topPosts @this)}}
+        {{> nodeMetaRight node.meta }}
+        {{/with}}
+    </div>
+    {{/times}}
+</div>
