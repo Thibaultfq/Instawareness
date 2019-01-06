@@ -11,12 +11,14 @@
     {{/if}}
     {{#if this.isHigherRanked}}
     <h4>
-        <span class="badge badge-success">Higher Rank:&nbsp;&nbsp;{{this.howMuchHigher}} <i class="fas fa-arrow-up"></i></span>
+        <span {{{this.isHighestRanked}}} class="badge badge-success">Higher
+            Rank:&nbsp;&nbsp;{{this.howMuchHigher}} <i class="fas fa-arrow-up"></i></span>
     </h4>
     {{/if}}
     {{#if this.isLowerRanked}}
     <h4>
-        <span class="badge badge-warning">Lower Rank:&nbsp;&nbsp;{{this.howMuchLower}} <i class="fas fa-arrow-down"></i></span>
+        <span {{{this.isLowestRanked}}} class="badge badge-warning">Lower
+            Rank:&nbsp;&nbsp;{{this.howMuchLower}} <i class="fas fa-arrow-down"></i></span>
     </h4>
     {{/if}}
 

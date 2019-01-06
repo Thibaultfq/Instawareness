@@ -114,9 +114,10 @@ function renderAll(cookies, res, insta) {
       return res.render("allFeeds", data);
     })
     .catch(error => {
-      if (error && (error.status == 429 || !error.ok)) {
+      console.log(error);
+      if (error && error.status == 429) {
         return res.status(429).render("limit");
-      } else return next();
+      } else return res.render("error");
     });
 }
 

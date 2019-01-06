@@ -1,7 +1,7 @@
 let consts = require("../src/const");
-let mockFeed = require("../mockFeed");
 const Spearman = require("spearman-rho");
 var fs = require("fs");
+var path = require("path");
 
 module.exports = {
   getAllViewData: async function(insta) {
@@ -12,11 +12,14 @@ module.exports = {
     // );
     // var json = JSON.stringify({ topPosts, allPosts });
     // fs.writeFile("../mockFeeds/mockFeedTF.json", json, "utf8");
-    let raw = fs.readFileSync("../mockFeeds/mockFeedTF.json");
+    console.log(__dirname);
+    let raw = fs.readFileSync(
+      path.join(__dirname, "/../mockFeeds/mockFeedTF.json")
+    );
     let mock = JSON.parse(raw);
     let topPosts = mock.topPosts;
     let allPosts = mock.allPosts;
-    topPosts.length = consts.topSubSetCount;
+    topPosts.length = 50;
     // topPosts = removeGarabage(topPosts);
     // allPosts = removeGarabage(allPosts);
     return {
@@ -105,10 +108,16 @@ async function getViewTwo(_topPosts, _allPosts) {
   );
 
   let AllPostsChronoIds = AllPostsChrono.map(n => n.node.id);
+  let maxHigherRanked = topPosts[0];
+  let maxLowerRanked = topPosts[0];
   topPosts.forEach((n, index) => {
     let indexNodeInAllPostsChrono = AllPostsChronoIds.indexOf(n.node.id); //if this is -1, the post is lower in the non-algorithm list, thus it is higher ranked by the algorithm and therefore included in top posts
 
     n.node.meta = {}; //create meta object to store all rankings meta data to show
+    if (index === 0) {
+      maxLowerRanked.node.meta.howMuchLower = 0;
+      maxHigherRanked.node.meta.howMuchHigher = 0;
+    }
 
     if (indexNodeInAllPostsChrono === index) {
       n.node.meta.isSameRanked = true;
@@ -116,20 +125,36 @@ async function getViewTwo(_topPosts, _allPosts) {
     if (indexNodeInAllPostsChrono > index) {
       n.node.meta.isHigherRanked = true;
       n.node.meta.howMuchHigher = indexNodeInAllPostsChrono - index;
+      if (n.node.meta.howMuchHigher > maxHigherRanked.node.meta.howMuchHigher) {
+        maxHigherRanked = n;
+      }
     }
     if (indexNodeInAllPostsChrono === -1) {
       n.node.meta.isHigherRanked = true;
       n.node.meta.howMuchHigher =
         AllPostsChronoUntrimmed.findIndex(an => an.node.id == n.node.id) -
         index;
+      if (n.node.meta.howMuchHigher > maxHigherRanked.node.meta.howMuchHigher) {
+        maxHigherRanked = n;
+      }
     }
     //higher index means 'lower' in the non-algorithm list, which counts for a lower index (higer rank) in the top post list. When its excluded from all posts, its in the toppost list because it was higher ranked by the algorithm.
     if (indexNodeInAllPostsChrono < index && indexNodeInAllPostsChrono > -1) {
       n.node.meta.isLowerRanked = true;
       n.node.meta.howMuchLower = indexNodeInAllPostsChrono - index;
+      if (n.node.meta.howMuchLower < maxLowerRanked.node.meta.howMuchLower) {
+        maxLowerRanked = n;
+      }
     }
     //not -1 because then it would be not in the list, and thus higher ranked in top posts.
   });
+
+  maxHigherRanked.node.meta.isHighestRanked = `data-highest="${
+    maxHigherRanked.node.meta.howMuchHigher
+  }"`;
+  maxLowerRanked.node.meta.isLowestRanked = `data-lowest="${
+    maxLowerRanked.node.meta.howMuchLower
+  }"`;
 
   return {
     topPosts: topPosts,
@@ -229,6 +254,8 @@ async function getViewThree(_topPosts, _allPosts) {
     .sort((a, b) => b.below - a.below)
     .slice(0, consts.amountOfFriends);
 
+  friendsRankings.top[0].isHighestFollowee = "data-highest-followee";
+  friendsRankings.below[0].isLowestFollowee = "data-lowest-followee";
   return {
     friendsRankings
   };

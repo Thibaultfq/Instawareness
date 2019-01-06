@@ -10,6 +10,15 @@ body {
   flex-direction: column;
   flex-wrap: nowrap;
 }
+body {
+  font-family: "Montserrat", sans-serif;
+}
+.insta,
+.user {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
 nav {
   flex-shrink: 0;
 }
@@ -44,10 +53,6 @@ nav {
   min-height: calc(100% - 30px); /* IE9+ and future browsers */
 }
 
-.form-heading {
-  color: #fff;
-  font-size: 23px;
-}
 .panel h2 {
   color: #444444;
   font-size: 18px;
@@ -78,11 +83,6 @@ nav {
 }
 .login-form {
   text-align: center;
-}
-.forgot a {
-  color: #777777;
-  font-size: 14px;
-  text-decoration: underline;
 }
 .login-form .btn.btn-primary {
   background: #777777 none repeat scroll 0 0;
@@ -129,7 +129,7 @@ a.disabled {
   background: url("../images/bg-pattern.png"),
     linear-gradient(to left, #7b4397, #dc2430);
 }
-.bg a,
+.bg a:not(".login-form a"),
 .bg .tablink {
   color: #b7daff;
   cursor: pointer;
@@ -160,4 +160,130 @@ a.disabled {
     -webkit-gradient(linear, right top, left top, from(#c26919), to(#b80f18));
   background: url("../images/bg-pattern.png"),
     linear-gradient(to left, #c26919, #b80f18);
+}
+
+.btn-muted {
+  color: #3a3a3a;
+  background-color: #eeeeee;
+  border-color: #eeee;
+}
+.login-example {
+  max-width: 10rem;
+}
+
+.login p,
+.login ul,
+#view1 p:not(.pbox) {
+  padding-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+p.pbox {
+  border: 1px solid #f1faee;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+}
+
+.login h3,
+.login h4,
+.login h5 {
+  /* background: rgba(241, 250, 238, 0.75);
+  color: #457b9d;
+  display: inline-block;
+  padding: 0.05rem 0.25rem;
+  border: 1px solid #f1faee;
+  border-radius: 3px; */
+}
+#nav-tabContent {
+  position: relative;
+}
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+  position: inherit;
+}
+
+.modal {
+  color: #444;
+}
+
+@media (min-width: 775px) {
+  .modal-dialog {
+    max-width: 700px;
+    margin: 1.75rem auto;
+  }
+}
+
+@media (min-width: 875px) {
+  .modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+  }
 }
