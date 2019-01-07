@@ -29,7 +29,7 @@ $(function() {
         element: "#view2 .algolist",
         title: "Gele lijst",
         content:
-          "De gele kolom rechts toont jou het resultaat zoals je het zou zien in jouw app, mét algoritme dus"
+          "De gele kolom rechts toont jou je feed zoals je het zou zien in jouw app, mét algoritme dus"
       },
       {
         element: "[data-highest]",
@@ -47,6 +47,9 @@ $(function() {
             100;
 
           $parentDiv.animate({ scrollTop: $scrollTop }, 1000);
+        },
+        onPrev: function() {
+          $("#nav-tabContent").animate({ scrollTop: 0 }, 750);
         }
       },
       {
@@ -71,7 +74,7 @@ $(function() {
         element: "#view3-tab",
         title: "Vrienden tabblad",
         content:
-          "Op deze Vrienden-pagina kan je zien <b>van welke mensen die je volgt, het algoritme deze hoger rangschikt in je feed</b>, welke gelijk en welke lager in je feed. Het algoritme schat hier eigenlijk in met welke vrienden je <b>meer of minder affiniteit</b> hebt.",
+          "Op deze Vrienden-pagina kan je zien <b> welke mensen je volgt door het algoritme hoger rangschikt zijn in je feed</b>, welke gelijk en welke lager. Het algoritme schat hier eigenlijk in met welke vrienden je <b>meer of minder affiniteit</b> hebt.",
         onNext: function() {
           $("#view3-tab").tab("show");
           $("#view2").removeClass("active");
@@ -100,9 +103,9 @@ $(function() {
       },
       {
         element: "#view4-tab",
-        title: "Vrienden tabblad",
+        title: "Verborgen vrienden tabblad",
         content:
-          "Op deze Vrienden-pagina kan je zien <b>van welke mensen die je volgt, het algoritme deze hoger rangschikt in je feed</b>, welke gelijk en welke lager in je feed. Het algoritme schat hier eigenlijk in met welke vrienden je <b>meer of minder affiniteit</b> hebt.",
+          "Op deze pagina kan je zien welke vrienden die <b>verborgen worden door het algoritme.</b> Dit komt omdat ze lager gerankschikt staan, en je hun posts dus zou missen moest je niet alle nieuwe posts bekijken. Als je lang genoeg scrollt, krijg je sowieso iedereen te zien.",
         onNext: function() {
           $("#view4-tab").tab("show");
           $("#view3").removeClass("active");
@@ -212,6 +215,6 @@ function getContentHiddenFollowee() {
       "#totalTopPosts"
     ).text()} posts in jouw feed scrollt. Dat betekent dat je <b>de post van ${
     $namesHiddenFollowee[0].innerText
-  }</b> zou missen. Heb je het gevoel dat je zo vaak belangrijke posts mist? Denk je dat het algoritme jouw posts ook voor vrienden verbergt?
+  }</b> zou missen, omdat die posts eigenlijk lager gerankt staat en hierdoor buiten de top 50 van het algoritme valt. Heb je het gevoel dat je zo vaak belangrijke posts mist? Denk je dat het algoritme jouw posts ook voor vrienden verbergt?
   `;
 }

@@ -287,3 +287,22 @@ p.pbox {
     margin: 1.75rem auto;
   }
 }
+
+.bs-popover-auto[x-placement^="right"] .arrow::after,
+.bs-popover-right .arrow::after {
+  border-right-color: #dc2430;
+}
+
+.bs-popover-auto[x-placement^="left"] .arrow::after,
+.bs-popover-left .arrow::after {
+  border-left-color: #7b4397;
+}
+
+.bs-popover-auto[x-placement^="bottom"] .arrow::after,
+.bs-popover-bottom .arrow::after {
+  border-bottom-color: #ad3666;
+}
+.bs-popover-auto[x-placement^="top"] .arrow::after,
+.bs-popover-top .arrow::after {
+  border-top-color: #ad3666;
+}

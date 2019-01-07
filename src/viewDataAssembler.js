@@ -5,21 +5,21 @@ var path = require("path");
 
 module.exports = {
   getAllViewData: async function(insta) {
-    // let topPosts = await getFeedByCount(consts.topSubSetCount, insta);
-    // let allPosts = await getFeedUntilDate(
-    //   topPosts[topPosts.length - 1].node.taken_at_timestamp,
-    //   insta
-    // );
+    let topPosts = await getFeedByCount(consts.topSubSetCount, insta);
+    let allPosts = await getFeedUntilDate(
+      topPosts[topPosts.length - 1].node.taken_at_timestamp,
+      insta
+    );
     // var json = JSON.stringify({ topPosts, allPosts });
     // fs.writeFile("../mockFeeds/mockFeedTF.json", json, "utf8");
-    console.log(__dirname);
-    let raw = fs.readFileSync(
-      path.join(__dirname, "/../mockFeeds/mockFeedTF.json")
-    );
-    let mock = JSON.parse(raw);
-    let topPosts = mock.topPosts;
-    let allPosts = mock.allPosts;
-    topPosts.length = 50;
+    // console.log(__dirname);
+    // let raw = fs.readFileSync(
+    //   path.join(__dirname, "/../mockFeeds/mockFeedTF.json")
+    // );
+    // let mock = JSON.parse(raw);
+    // let topPosts = mock.topPosts;
+    // let allPosts = mock.allPosts;
+    // topPosts.length = 50;
     // topPosts = removeGarabage(topPosts);
     // allPosts = removeGarabage(allPosts);
     return {
