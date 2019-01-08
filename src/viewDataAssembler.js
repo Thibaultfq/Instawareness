@@ -254,8 +254,10 @@ async function getViewThree(_topPosts, _allPosts) {
     .sort((a, b) => b.below - a.below)
     .slice(0, consts.amountOfFriends);
 
-  friendsRankings.top[0].isHighestFollowee = "data-highest-followee";
-  friendsRankings.below[0].isLowestFollowee = "data-lowest-followee";
+  if (!!friendsRankings.top[0] && !!friendsRankings.below[0]) {
+    friendsRankings.top[0].isHighestFollowee = "data-highest-followee";
+    friendsRankings.below[0].isLowestFollowee = "data-lowest-followee";
+  }
   return {
     friendsRankings
   };

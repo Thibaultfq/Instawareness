@@ -31,19 +31,6 @@ router.get("/login", function(req, res, next) {
 
 router.post("/login", function(req, res, next) {
   let csrf, sessionid;
-  //return feed and set the coockies in the request.
-
-  // res.cookie("csrf", "iI1WDCB4VkbicpvvkQYG8KwuQQPbWee4", {
-  //   expires: new Date(Date.now() + 6912000000), //80 days from now
-  //   httpOnly: true,
-  //   secure: true
-  // });
-  // res.cookie("sessionid", "9179344258%253AJCqrwlole3Cnn2%253A25", {
-  //   expires: new Date(Date.now() + 6912000000), //80 days from now
-  //   httpOnly: true,
-  //   secure: true
-  // });
-
   let instagram = new Instagram();
 
   instagram
@@ -52,8 +39,6 @@ router.post("/login", function(req, res, next) {
       if (!csrf_) {
         return Promise.reject("csrf is undefined:" + csrf_);
       }
-      console.log("CSRF");
-      console.log(csrf_);
       csrf = csrf_;
       instagram.csrfToken = csrf_;
     })
@@ -61,8 +46,6 @@ router.post("/login", function(req, res, next) {
       return instagram
         .auth(req.body.username, req.body.password)
         .then(sessionId_ => {
-          console.log("SESSIONID");
-          console.log(sessionId_);
           if (!sessionId_) {
             return Promise.reject(401);
           }
@@ -73,17 +56,17 @@ router.post("/login", function(req, res, next) {
     .then(() => {
       res.cookie("csrf", csrf, {
         expires: new Date(Date.now() + 6912000000), //80 days from now
-        httpOnly: true,
-        secure: true
+        secure: false,
+        httpOnly: false
       });
       res.cookie("sessionid", sessionid, {
         expires: new Date(Date.now() + 6912000000), //80 days from now
-        httpOnly: true,
-        secure: true
+        secure: false,
+        httpOnly: false
       });
     })
     .then(() => {
-      res.status(200).send({ redirect: "/" });
+      res.status(200).send({ redirect: "/", sessionid: sessionid, csrf: csrf });
     })
     .catch(error => {
       //res.status(401).send("Invalid login credentials");

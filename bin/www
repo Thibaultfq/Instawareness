@@ -5,29 +5,29 @@
  */
 
 var app = require("../app");
-var debug = require("debug")("instawareness:server");
+var debug = require("debug")("chore-tracker:server");
 var http = require("http");
 
 /**
  * Get port from environment and store in Express.
  */
 
-// var port = normalizePort(process.env.PORT || "3000");
-// app.set("port", port);
+var port = normalizePort(process.env.PORT || "8000");
+app.set("port", port);
 
 /**
  * Create HTTP server.
  */
 
-// var server = http.createServer(app);
+var server = http.createServer(app);
 
-// /**
-//  * Listen on provided port, on all network interfaces.
-//  */
+/**
+ * Listen on provided port, on all network interfaces.
+ */
 
-// server.listen(port);
-// server.on("error", onError);
-// server.on("listening", onListening);
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -84,45 +84,3 @@ function onListening() {
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
 }
-
-// Add HTTPS Section
-var fs = require("fs");
-var https = require("https");
-var http_port = normalizePort(process.env.PORT || "8080");
-var https_port = process.env.PORT_HTTPS || 8443;
-var options = {
-  key: fs.readFileSync("server.key"),
-  cert: fs.readFileSync("server.cert")
-};
-
-app.set("port", https_port);
-
-/*
-° Create HTTPS server.
-*/
-var server = https.createServer(options, app).listen(https_port, function() {
-  console.log("Magic happens on port " + https_port);
-});
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-server.on("error", onError);
-server.on("listening", onListening);
-
-// Redirect from http port to https
-http
-  .createServer(function(req, res) {
-    res.writeHead(301, {
-      Location:
-        "https://" +
-        req.headers["host"].replace(http_port, https_port) +
-        req.url
-    });
-    console.log("http requet, will go to >> ");
-    console.log(
-      "https://" + req.headers["host"].replace(http_port, https_port) + req.url
-    );
-    res.end();
-  })
-  .listen(http_port);
