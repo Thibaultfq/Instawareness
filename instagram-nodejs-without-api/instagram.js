@@ -336,6 +336,7 @@ module.exports = class Instagram {
               }
             }
         }
+        console.log(this.essentialValues.sessionid);
         return this.essentialValues.sessionid;
       })
       .catch(e => {

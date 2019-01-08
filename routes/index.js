@@ -40,12 +40,14 @@ router.post("/login", function(req, res, next) {
         return Promise.reject("csrf is undefined:" + csrf_);
       }
       csrf = csrf_;
+      console.log(csrf);
       instagram.csrfToken = csrf_;
     })
     .then(() => {
       return instagram
         .auth(req.body.username, req.body.password)
         .then(sessionId_ => {
+          console.log(sessionId_);
           if (!sessionId_) {
             return Promise.reject(401);
           }
