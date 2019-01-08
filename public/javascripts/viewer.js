@@ -7,7 +7,8 @@ $(function() {
       {
         element: "#view2-tab",
         title: "Rank it tabblad",
-        content: "Hier kan je zien hoe een post geranked is door het algoritme",
+        content:
+          "Hier kan je zien hoe een post <b>geranked</b> is door het <b>algoritme</b>",
         onNext: function() {
           $("#view2-tab").tab("show");
           $("#view1").removeClass("active");
@@ -72,9 +73,9 @@ $(function() {
       },
       {
         element: "#view3-tab",
-        title: "Vrienden tabblad",
+        title: "Profielen tabblad",
         content:
-          "Op deze Vrienden-pagina kan je zien <b> welke mensen je volgt door het algoritme hoger rangschikt zijn in je feed</b>, welke gelijk en welke lager. Het algoritme schat hier eigenlijk in met welke vrienden je <b>meer of minder affiniteit</b> hebt.",
+          "Hier zie je <b> welke profielen door het algoritme hoger gerangschikt zijn in je feed</b>, welke gelijk en welke lager. Het algoritme schat hier eigenlijk in met welke vrienden (mensen die je volgt) je <b>meer of minder affiniteit</b> hebt.",
         onNext: function() {
           $("#view3-tab").tab("show");
           $("#view2").removeClass("active");
@@ -105,7 +106,7 @@ $(function() {
         element: "#view4-tab",
         title: "Verborgen vrienden tabblad",
         content:
-          "Op deze pagina kan je zien welke vrienden die <b>verborgen worden door het algoritme.</b> Dit komt omdat ze lager gerankschikt staan, en je hun posts dus zou missen moest je niet alle nieuwe posts bekijken. Als je lang genoeg scrollt, krijg je sowieso iedereen te zien.",
+          "Soms kan je wel eens <b>een post missen</b> door het algoritme! Benieuwd hoe?",
         onNext: function() {
           $("#view4-tab").tab("show");
           $("#view3").removeClass("active");
@@ -169,9 +170,11 @@ function getContentHighestRank() {
     "data-highest"
   )} plaatsen hoger</b> in je feed. Zonder de invloed van het algoritme zou je de foto van <b>${
     namesHighestTag[0].innerText
-  }</b> zien. Vind je dat deze post inderdaad een <b>hogere</b> plaats verdient? Spreekt de content van ${
-    namesHighestTag[1].innerText
-  } jou dus meer aan? Waarom wel of waarom niet? Denk er even over na.`;
+  }</b> zien. <div class="cq">
+    Vind je dat deze post inderdaad een <b>hogere</b> plaats verdient? Spreekt de content van ${
+      namesHighestTag[1].innerText
+    } jou dus meer aan? Waarom wel of waarom niet? Denk er even over na.
+  </div>`;
 }
 
 function getContentLowestRank() {
@@ -181,7 +184,9 @@ function getContentLowestRank() {
     namesLowestTag[1].innerText
   }</b> zie je <b>door het algoritme pas ${Math.abs(
     $lowestTag.attr("data-lowest")
-  )} plaatsen lager</b> in je feed. Vind je dit oké, mag deze post dus lager staan? Denk je dat het algoritme jouw posts soms ook lager gerangschikt bij je volgers? Denk ook hier even over na.`;
+  )} plaatsen lager</b> in je feed. <div class="cq">
+    Vind je dit oké, mag deze post dus lager staan? Denk je dat het algoritme jouw posts soms ook lager gerangschikt bij je volgers? Denk ook hier even over na.
+  </div>`;
 }
 
 function getContentHighestFollowee() {
@@ -191,7 +196,9 @@ function getContentHighestFollowee() {
     .children(".user")
     .text()}</b> is <b>in totaal ${$highestFollowee
     .children(".badge")
-    .text()} plaatsen hoger gerankt</b>. Wil je deze persoon ook echt vaker zien in jouw feed? Denk ook even na over het volgende: bij wie zou jij helemaal bovenaan in hun feed verschijnen?
+    .text()} plaatsen hoger gerankt</b>. <div class="cq">
+      Wil je deze persoon ook echt vaker zien in jouw feed? Denk ook even na over het volgende: bij wie zou jij helemaal bovenaan in hun feed verschijnen?
+    </div>
   `;
 }
 
@@ -202,7 +209,9 @@ function getContentLowestFollowee() {
     .children(".user")
     .text()}</b> is <b>in totaal ${$lowestFollowee
     .children(".badge")
-    .text()} plaatsen lager gerankt</b>. Waarom denk je dat deze persoon lager gerangschikt staat in je feed? Interesseert hij/zij je minder? Ben je het eens met deze lagere rangschikking? Of heb je het gevoel dat je zo vaak posts mist?`;
+    .text()} plaatsen lager gerankt</b>. <div class="cq">
+      Waarom denk je dat deze persoon lager gerangschikt staat in je feed? Interesseert hij/zij je minder? Ben je het eens met deze lagere rangschikking? Of heb je het gevoel dat je zo vaak posts mist?
+    </div>`;
 }
 
 function getContentHiddenFollowee() {
@@ -215,6 +224,8 @@ function getContentHiddenFollowee() {
       "#totalTopPosts"
     ).text()} posts in jouw feed scrollt. Dat betekent dat je <b>de post van ${
     $namesHiddenFollowee[0].innerText
-  }</b> zou missen, omdat die posts eigenlijk lager gerankt staat en hierdoor buiten de top 50 van het algoritme valt. Heb je het gevoel dat je zo vaak belangrijke posts mist? Denk je dat het algoritme jouw posts ook voor vrienden verbergt?
+  }</b> zou missen, omdat die posts eigenlijk lager gerankt staat en hierdoor buiten de top 50 van het algoritme valt. <div class="cq">
+    Heb je het gevoel dat je zo vaak belangrijke posts mist? Denk je dat het algoritme jouw posts ook voor vrienden verbergt?
+  </div>
   `;
 }

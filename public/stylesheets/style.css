@@ -53,29 +53,26 @@ nav {
   min-height: calc(100% - 30px); /* IE9+ and future browsers */
 }
 
-.panel h2 {
-  color: #444444;
-  font-size: 18px;
+.panel h3 {
+  color: #eee;
   margin: 0 0 8px 0;
 }
 .panel p {
-  color: #777777;
+  color: #eee;
   font-size: 14px;
   margin-bottom: 30px;
   line-height: 24px;
 }
 .login-form .form-control {
-  background: #f7f7f7 none repeat scroll 0 0;
-  border: 1px solid #d4d4d4;
+  border: 1px solid #fff;
   border-radius: 4px;
   font-size: 14px;
   height: 50px;
   line-height: 50px;
 }
 .main-div {
-  background: #ffffff none repeat scroll 0 0;
-  border-radius: 2px;
-  padding: 50px 70px 70px 71px;
+  /* background: #ffffff none repeat scroll 0 0; */
+  padding: 50px;
 }
 
 .login-form .form-group {
@@ -96,8 +93,11 @@ nav {
 }
 .forgot {
   text-align: left;
-  margin-bottom: 30px;
 }
+.login li:not(:last-child) {
+  padding-bottom: 0.9rem;
+}
+
 .botto-text {
   color: #ffffff;
   font-size: 14px;
@@ -123,14 +123,32 @@ a.disabled {
 
 .bg {
   color: white;
-  background: url("../images/bg-pattern.png"), #7b4397;
+  background: url("../images/bg-pattern.png"), rgba(220, 36, 48, 1);
   background: url("../images/bg-pattern.png"),
-    -webkit-gradient(linear, right top, left top, from(#7b4397), to(#dc2430));
+    -moz-linear-gradient(left, rgba(220, 36, 48, 1) 0%, rgba(123, 67, 151, 1)
+          100%);
   background: url("../images/bg-pattern.png"),
-    linear-gradient(to left, #7b4397, #dc2430);
+    -webkit-gradient(left top, right top, color-stop(0%, rgba(220, 36, 48, 1)), color-stop(100%, rgba(123, 67, 151, 1)));
+  background: url("../images/bg-pattern.png"),
+    -webkit-linear-gradient(left, rgba(220, 36, 48, 1) 0%, rgba(123, 67, 151, 1)
+          100%);
+  background: url("../images/bg-pattern.png"),
+    -o-linear-gradient(left, rgba(220, 36, 48, 1) 0%, rgba(123, 67, 151, 1) 100%);
+  background: url("../images/bg-pattern.png"),
+    -ms-linear-gradient(left, rgba(220, 36, 48, 1) 0%, rgba(123, 67, 151, 1)
+          100%);
+  background: url("../images/bg-pattern.png"),
+    linear-gradient(
+      to right,
+      rgba(220, 36, 48, 1) 0%,
+      rgba(123, 67, 151, 1) 100%
+    );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dc2430', endColorstr='#7b4397', GradientType=1 );
 }
-.bg a:not(".login-form a"),
+
+.bg a,
 .bg .tablink {
+  text-decoration: underline;
   color: #b7daff;
   cursor: pointer;
 }
@@ -172,28 +190,26 @@ a.disabled {
 }
 
 .login p,
-.login ul,
+.login .pbox,
 #view1 p:not(.pbox) {
-  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-size: 0.9rem;
 }
 
-p.pbox {
+p.pbox,
+.pbox {
+  font-size: 0.9rem;
   border: 1px solid #f1faee;
   border-radius: 3px;
   padding: 0.25rem 0.5rem;
 }
-
-.login h3,
-.login h4,
-.login h5 {
-  /* background: rgba(241, 250, 238, 0.75);
-  color: #457b9d;
-  display: inline-block;
-  padding: 0.05rem 0.25rem;
-  border: 1px solid #f1faee;
-  border-radius: 3px; */
+.login .pbox {
+  border: 1px solid #3a3a3a;
 }
+.pbox ul {
+  margin-bottom: 0;
+}
+
 #nav-tabContent {
   position: relative;
 }
@@ -305,4 +321,19 @@ p.pbox {
 .bs-popover-auto[x-placement^="top"] .arrow::after,
 .bs-popover-top .arrow::after {
   border-top-color: #ad3666;
+}
+
+.w-90 {
+  width: 90% !important;
+}
+
+.btn-white {
+  color: #3a3a3a;
+  background-color: #eee;
+  border-color: #eee;
+}
+
+.cq {
+  padding-top: 0.9rem;
+  color: #ad3666;
 }
