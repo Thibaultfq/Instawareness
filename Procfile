@@ -1,1 +1,1 @@
-web: npm run debug
+web: npm run start
