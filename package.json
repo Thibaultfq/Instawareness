@@ -18,6 +18,7 @@
     "form-data": "^2.3.3",
     "hbs": "^4.0.1",
     "http-errors": "~1.6.2",
+    "instagram-private-api": "git+https://git@github.com/huttarichard/instagram-private-api.git",
     "mobile-detect": "^1.4.3",
     "morgan": "~1.9.0",
     "node-fetch": "^2.2.0",

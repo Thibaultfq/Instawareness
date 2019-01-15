@@ -3,6 +3,7 @@ var router = express.Router();
 var Instagram = require("./../instagram-nodejs-without-api/instagram");
 var vdAssembler = require("../src/viewDataAssembler");
 var MobileDetect = require("mobile-detect");
+var Client = require("./../instagram-private-api").V1;
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -27,6 +28,17 @@ router.get("/", function(req, res, next) {
 /* GET login page. Here you can force to go to the login page, even if you do already are logged in. */
 router.get("/login", function(req, res, next) {
   return res.render("login");
+});
+
+router.post("/loginClient", function(req, res, next) {
+  var storage = new Client.CookieMemoryStorage();
+  var device = new Client.Device(req.body.username);
+
+  loginClient(device, storage, req.body.username, req.body.password).then(
+    session => {
+      console.log(session);
+    }
+  );
 });
 
 router.post("/login", function(req, res, next) {
@@ -106,4 +118,56 @@ function renderAll(cookies, res, insta) {
     });
 }
 
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+function challengeMe(error, device, storage, user, password, proxy) {
+  return Client.Web.Challenge.resolve(error, "phone")
+    .then(function(challenge) {
+      // challenge instanceof Client.Web.Challenge
+      console.log(challenge.type);
+      // can be phone or email
+      // let's assume we got phone
+      if (challenge.type !== "phone") return;
+      //Let's check if we need to submit/change our phone number
+      return challenge.phone("your phone number").then(function() {
+        return challenge;
+      });
+    })
+    .then(function(challenge) {
+      if (!(challenge instanceof Client.Web.PhoneVerificationChallenge)) {
+        return challenge;
+      }
+
+      // Ok we got to the next step, the response code expected by Instagram
+      return new Promise((resolve, reject) => {
+        rl.question("Code: ", code => {
+          resolve(challenge.code(code));
+        });
+      });
+    })
+    .catch(Client.Exceptions.NoChallengeRequired, function(e) {
+      // And we got the account confirmed!
+      // so let's login again
+      return loginClient(device, storage, user, password, proxy);
+    });
+}
+
+async function loginClient(device, storage, user, password, proxy) {
+  return Client.Session.create(device, storage, user, password, proxy)
+    .then(function(session) {
+      // Now you have a session, we can follow / unfollow, anything...
+      // And we want to follow Instagram official profile
+      console.log(session);
+      return session;
+    })
+    .catch(Client.Exceptions.CheckpointError, function(error) {
+      // Ok now we know that Instagram is asking us to
+      // prove that we are real users
+      //console.log(error);
+      return challengeMe(error, device, storage, user, password);
+    });
+}
 module.exports = router;
