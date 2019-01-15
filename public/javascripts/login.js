@@ -1,5 +1,5 @@
 $(function() {
-  if (!Cookies.get("csrf") || !Coockies.get("sessionid")) {
+  if (!Cookies.get("csrf") || !Cookies.get("sessionid")) {
     const $form = $("#Login");
     $form.on("submit", submitHandler);
     $("#password").keyup(function(event) {
