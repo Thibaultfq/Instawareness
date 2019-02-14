@@ -123,30 +123,52 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+var challenges = {};
 function challengeMe(error, device, storage, user, password, proxy) {
-  return Client.Web.Challenge.resolve(error, "phone")
+  return Client.Web.Challenge.resolve(error)
     .then(function(challenge) {
       // challenge instanceof Client.Web.Challenge
       console.log(challenge.type);
       // can be phone or email
       // let's assume we got phone
-      if (challenge.type !== "phone") return;
-      //Let's check if we need to submit/change our phone number
-      return challenge.phone("your phone number").then(function() {
-        return challenge;
-      });
-    })
-    .then(function(challenge) {
-      if (!(challenge instanceof Client.Web.PhoneVerificationChallenge)) {
-        return challenge;
-      }
+      //   if (challenge.type !== "phone") {
+      //     return;
+      //   }
+      //   //Let's check if we need to submit/change our phone number
+      //   return challenge.phone("your phone number").then(function() {
+      //     return challenge;
+      //   });
+      // })
+      // .then(function(challenge) {
+      //   if (!(challenge instanceof Client.Web.PhoneVerificationChallenge)) {
+      //     return challenge;
+      //   }
+      let challengeId = Number(Math.round(Math.random() * 111111111)).toString(
+        16
+      );
+      challenges[challengeId] = challenge;
+      setTimeout(() => {
+        delete challenges[challengeId];
+      }, 1000 * 60 * 10);
+      console.log(
+        `username=${username} password=${password} challengeId=${challengeId}`
+      );
+      console.log(challenge);
+      // res.redirect(
+      //   `/auth/instagram/challenge?type=${
+      //     challenge.type
+      //   }&challenge_id=${challengeId}`
+      // );
+      return res
+        .status(200)
+        .send({ challenge: "challenge", challengeId: challengeId });
 
       // Ok we got to the next step, the response code expected by Instagram
-      return new Promise((resolve, reject) => {
-        rl.question("Code: ", code => {
-          resolve(challenge.code(code));
-        });
-      });
+      // return new Promise((resolve, reject) => {
+      //   rl.question("Code: ", code => {
+      //     resolve(challenge.code(code));
+      //   });
+      // });
     })
     .catch(Client.Exceptions.NoChallengeRequired, function(e) {
       // And we got the account confirmed!
@@ -154,6 +176,27 @@ function challengeMe(error, device, storage, user, password, proxy) {
       return loginClient(device, storage, user, password, proxy);
     });
 }
+
+// when the user enters the code on font end call this endpoint
+router.post("/loginClient/challenge", async (req, res) => {
+  console.info(req.body);
+  let challengeId = req.body.challengeId;
+  let code = req.body.code;
+  if (!challenges[challengeId]) return res.send("ChallengeId not found");
+  challenges[challengeId]
+    .code(code)
+    .then(r => {
+      console.log(r);
+      return loginClient(device, storage, user, password, proxy);
+    })
+    .then(sessionid => {
+      res.status(200).send({ redirect: "/", sessionid: sessionid, csrf: csrf });
+    })
+    .catch(res.json)
+    .finally(f => {
+      delete challenges[challengeId];
+    });
+});
 
 async function loginClient(device, storage, user, password, proxy) {
   return Client.Session.create(device, storage, user, password, proxy)

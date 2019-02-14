@@ -16,13 +16,13 @@ $(function() {
       //   .prepend('<i class="fas fa-circle-notch fa-spin fa-lg"></i>&nbsp;');
       // $("#password").off("keyup");
       $.ajax({
-        url: "/loginClient",
+        url: "/login",
         type: "POST",
         data: $form.serialize(),
         dataType: "json",
         xhrFields: { withCredentials: true },
         success: function(data, textStatus, jqXHR) {
-          if (typeof data.redirect == "string") {
+          if (!!data.redirect && typeof data.redirect == "string") {
             Cookies.set("csrf", data.csrf, { expires: 80 });
 
             Cookies.set("sessionid", data.sessionid, {
@@ -36,6 +36,22 @@ $(function() {
             );
 
             window.location.href = data.redirect;
+          }
+          if (!!data.challenge && typeof data.challenge == "challenge") {
+            let challengeId = data.challengeId;
+            $("#codesubmit").click(function() {
+              $.ajax({
+                url: "/loginClient/challenge",
+                type: "POST",
+                data: { challengeId: challengeId, code: $("#code").val() },
+                dataType: "json",
+                xhrFields: { withCredentials: true },
+                success: function(data, textStatus, jqXHR) {}
+              });
+            });
+            $(".login").prepend(
+              '<div class="alert alert-warning w-50 mx-auto" role="alert"><i class="fas fa-circle-notch fa-spin fa-lg"></i>Bevestig even aan instagram dat jij het bent die probeert in te loggen, ze willen jou namelijk goed beschermen! Je hebt een email gekregen met een code in, vul die hieronder in. <input id="code" placeholder="Typ hier je cijfercode"/> <button id="codesubmit" type="button" class="btn btn-success">OK</button></div>'
+            );
           }
         },
         error: function(xhr, textStatus, errorThrown) {
