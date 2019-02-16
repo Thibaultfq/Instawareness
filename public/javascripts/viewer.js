@@ -157,7 +157,7 @@ $(function() {
 
   // Start the tour
   $("#startbtn").click(function() {
-    tour.start(true);
+    tour.restart();
   });
 });
 
