@@ -111,10 +111,11 @@ function renderAll(cookies, res, insta) {
       return res.render("allFeeds", data);
     })
     .catch(error => {
+      console.log("logging error before handling error routing response");
       console.log(error);
-      if (error && error.status == 429) {
+      if (error && (error.status == 429 || error.status == 502)) {
         return res.status(429).render("limit");
-      } else return res.render("error");
+      } else return res.render("error", { errorstr: JSON.stringify(error) });
     });
 }
 

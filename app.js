@@ -21,6 +21,9 @@ hbs.registerHelper("times", function(n, block) {
 hbs.registerHelper("toPrecision", function(number, precision) {
   return Number(number).toPrecision(precision);
 });
+hbs.registerHelper("json", function(context) {
+  return JSON.stringify(context);
+});
 
 app.use(logger("dev"));
 app.use(express.json());
