@@ -5,10 +5,13 @@ var path = require("path");
 
 module.exports = {
   getAllViewData: async function(insta) {
-    let topPosts = await getFeedByCount(consts.topSubSetCount, insta);
+    let topPostsAndCursor = await getFeedByCount(consts.topSubSetCount, insta);
+    let topPosts = topPostsAndCursor.topPosts;
     let allPosts = await getFeedUntilDate(
       topPosts[topPosts.length - 1].node.taken_at_timestamp,
-      insta
+      insta,
+      JSON.parse(JSON.stringify(topPosts)),
+      topPostsAndCursor.cursor ? topPostsAndCursor.cursor : null //deepclone that
     );
     // var json = JSON.stringify({ topPosts, allPosts });
     // fs.writeFile("../mockFeeds/mockFeedTF.json", json, "utf8");
@@ -269,30 +272,42 @@ async function getFeedUntilDate(
   f = [],
   cursor = null
 ) {
-  return insta.getFeed(consts.maxItemQuery, cursor).then(r => {
-    let newNodes = r.data.user.edge_web_feed_timeline.edges;
-    //do not sort it here already because there is chance on concat afterwards, which would make sorting before that useless.
-    //if all dates in the retrieved nodes are before the given date, we can assure no more content more recently than the given date will be fetched next time and we can stop fetching
-    newNodes = removeGarabage(newNodes);
-    let maxDateFetchedInterval = newNodes.reduce(
-      (max, n) =>
-        n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max,
-      newNodes[0].node.taken_at_timestamp
-    );
-    if (maxDateFetchedInterval >= startDateRequestedInterval) {
-      //date range is still in interval we want to get all nodes from, so keep fetching
-      f = f.concat(newNodes); //concat the nodes before recursion.
-      return getFeedUntilDate(
-        startDateRequestedInterval,
-        insta,
-        f,
-        insta.getFeedNextPage(r)
+  return insta
+    .getFeed(consts.maxItemQuery, cursor)
+    .then(r => {
+      let newNodes = r.data.user.edge_web_feed_timeline.edges;
+      //do not sort it here already because there is chance on concat afterwards, which would make sorting before that useless.
+      //if all dates in the retrieved nodes are before the given date, we can assure no more content more recently than the given date will be fetched next time and we can stop fetching
+      newNodes = removeGarabage(newNodes);
+      let maxDateFetchedInterval = newNodes.reduce(
+        (max, n) =>
+          n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max,
+        newNodes[0].node.taken_at_timestamp
       );
-    } else {
-      //no concat needed because all fetched nodes are out of the interval we want to get all nodes from, so adding them would be unnecessary.
-      return f;
-    }
-  });
+      if (maxDateFetchedInterval >= startDateRequestedInterval) {
+        //date range is still in interval we want to get all nodes from, so keep fetching
+        f = f.concat(newNodes); //concat the nodes before recursion.
+        return getFeedUntilDate(
+          startDateRequestedInterval,
+          insta,
+          f,
+          insta.getFeedNextPage(r)
+        );
+      } else {
+        //no concat needed because all fetched nodes are out of the interval we want to get all nodes from, so adding them would be unnecessary.
+        return f;
+      }
+    })
+    .catch(function(error) {
+      if (f.length >= consts.topSubSetCount) {
+        console.log(
+          "returned unncompleted allstores with length of: " + f.length
+        );
+        return Promise.resolve(f);
+      } else {
+        Promise.reject(error);
+      }
+    });
 }
 
 async function getFeedByCount(
@@ -319,7 +334,10 @@ async function getFeedByCount(
           insta.getFeedNextPage(r)
         );
       } else {
-        return f;
+        return {
+          topPosts: f,
+          cursor: insta.getFeedNextPage(r)
+        };
       }
     });
 }
