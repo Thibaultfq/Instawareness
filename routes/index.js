@@ -13,7 +13,7 @@ router.get("/", function(req, res, next) {
   }
   if (!(req.cookies.csrf || req.cookies.sessionid)) {
     //no previous session found, so render the login page completely with layout
-    return res.render("login");
+    return res.render("loginManual");
   }
   //render the feed immediately
   renderAll(
@@ -27,7 +27,7 @@ router.get("/", function(req, res, next) {
 
 /* GET login page. Here you can force to go to the login page, even if you do already are logged in. */
 router.get("/login", function(req, res, next) {
-  return res.render("login");
+  return res.render("loginManual");
 });
 
 router.post("/loginClient", function(req, res, next) {
@@ -118,11 +118,6 @@ function renderAll(cookies, res, insta) {
     });
 }
 
-const readline = require("readline");
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 var challenges = {};
 function challengeMe(error, device, storage, user, password, proxy) {
   return Client.Web.Challenge.resolve(error)

@@ -37,7 +37,7 @@ $(function() {
 
             window.location.href = data.redirect;
           }
-          if (!!data.challenge && typeof data.challenge == "challenge") {
+          if (!!data.challenge && typeof data.challenge == "string") {
             let challengeId = data.challengeId;
             $("#codesubmit").click(function() {
               $.ajax({
@@ -45,8 +45,9 @@ $(function() {
                 type: "POST",
                 data: { challengeId: challengeId, code: $("#code").val() },
                 dataType: "json",
-                xhrFields: { withCredentials: true },
-                success: function(data, textStatus, jqXHR) {}
+                success: function(data, textStatus, jqXHR) {
+                  alert("code succesfull sent");
+                }
               });
             });
             $(".login").prepend(
@@ -69,7 +70,12 @@ $(function() {
               }
             });
           } else {
-            // alert("Something went wrong, please let me know so i can fix it.");
+            console.log(
+              "Something went wrong, please let me know so i can fix it."
+            );
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(errorThrown);
           }
         }
       });

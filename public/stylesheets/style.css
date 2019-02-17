@@ -337,3 +337,38 @@ p.pbox,
   padding-top: 0.9rem;
   color: #ad3666;
 }
+
+.login-image-steps {
+  width: 380px;
+  height: auto;
+  display: block;
+}
+
+.ol-login-steps li {
+  margin-bottom: 1rem;
+}
+
+.cookies-nopaste {
+  color: #212529;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.cookies-nojson {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.cookies-ok {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.alert-fixed {
+  position: fixed;
+  top: 15px;
+  left: 25%;
+  z-index: 9999;
+}
