@@ -69,3 +69,4 @@ typings/
 
 /.vscode
 .DS_Store
+/private
