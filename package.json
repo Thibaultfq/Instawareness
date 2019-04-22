@@ -11,18 +11,33 @@
     "debug": "nodemon --inspect -e js,css,hbs,html ./bin/www"
   },
   "dependencies": {
+    "bluebird": "^3.5.2",
+    "camelcase-keys": "^4.2.0",
     "cookie-parser": "~1.4.3",
+    "crypto-js": "^3.1.6",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-handlebars": "^3.0.0",
-    "firebase-admin": "7.0.0",
     "form-data": "^2.3.3",
-    "hbs": "^4.0.1",
+    "hbs": "4.0.4",
     "http-errors": "~1.6.2",
-    "instagram-private-api": "git+https://git@github.com/huttarichard/instagram-private-api.git",
+    "instagram-id-to-url-segment": "0.0.0",
+    "is-stream": "^1.1.0",
+    "js-md5": "^0.3.0",
+    "json-bigint": "^0.2.0",
+    "lodash": "^4.17.5",
     "mobile-detect": "^1.4.3",
     "morgan": "~1.9.0",
-    "node-fetch": "^2.2.0"
+    "node-cache": "^3.0.0",
+    "node-fetch": "^2.2.0",
+    "proxy-agent": "^3.0.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "touch": "^1.0.0",
+    "tough-cookie": "^2.3.3",
+    "tough-cookie-file-store": "^1.2.0",
+    "underscore.string": "^3.3.5",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {}
 }
