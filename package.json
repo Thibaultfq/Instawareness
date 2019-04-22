@@ -22,8 +22,7 @@
     "instagram-private-api": "git+https://git@github.com/huttarichard/instagram-private-api.git",
     "mobile-detect": "^1.4.3",
     "morgan": "~1.9.0",
-    "node-fetch": "^2.2.0",
-    "spearman-rho": "^1.0.6"
+    "node-fetch": "^2.2.0"
   },
   "devDependencies": {}
 }

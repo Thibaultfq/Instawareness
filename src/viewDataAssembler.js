@@ -1,8 +1,6 @@
 let consts = require("../src/const");
-const Spearman = require("spearman-rho");
 var fs = require("fs");
 var path = require("path");
-const db = require("../base");
 
 module.exports = {
   getAllViewData: async function(insta) {
@@ -60,20 +58,6 @@ function saveStatistics(viewTwo, viewThree, viewFour) {
       (n) => n.node.meta.isExcludedFromTopStories
     ).length;
   }
-
-  db.collection("d1")
-    .add({
-      rankedPostsRanks,
-      chronoPostsRanks,
-      time: new Date().getTime(),
-      hiddenAmount
-    })
-    .then((ref) => {
-      console.log("Added document with ID: ", ref.id);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 }
 
 async function getViewFour(_topPosts, _allPosts) {
@@ -118,7 +102,6 @@ async function getViewFour(_topPosts, _allPosts) {
   }
 
   allPosts = allPosts.slice(0, indexLastItemTopPostsInAllPosts + 1);
-  //const spearmanRank = await calculateSpearmanRank(rankedFeedRank, nonAlgoRank);
   const beginOverlap = {
     topPosts: topPosts.splice(0, indexDifferentRankingStarts), //the indexDifferentRankingStarts is the index where the lists start to differ. Until the previous post they can be collapsed. This index number thus gives the amount of (overlapping) posts before it in the array, since it's zero based.
     allPosts: allPosts.splice(0, indexDifferentRankingStarts)
@@ -141,12 +124,6 @@ async function getViewTwo(_topPosts, _allPosts) {
   sortByMostRecent(AllPostsChrono);
   let AllPostsChronoUntrimmed = [...AllPostsChrono];
   AllPostsChrono.length = topPosts.length;
-  // const rankedPostsRanks = topPosts.map((n) => n.node.rank); //map rank
-  // const chronoPostsRanks = AllPostsChrono.map((n) => n.node.rank); //map rank
-  // const spearman = await calculateSpearmanRank(
-  //   rankedPostsRanks,
-  //   chronoPostsRanks
-  // );
 
   let AllPostsChronoIds = AllPostsChrono.map((n) => n.node.id);
   let maxHigherRanked = topPosts[0];
@@ -200,7 +177,6 @@ async function getViewTwo(_topPosts, _allPosts) {
   return {
     topPosts: topPosts,
     chronoPosts: AllPostsChrono
-    //spearman
   };
 }
 
@@ -403,10 +379,4 @@ function addRank(posts) {
 
 function sortByMostRecent(posts) {
   posts.sort((a, b) => b.node.taken_at_timestamp - a.node.taken_at_timestamp);
-}
-
-async function calculateSpearmanRank(rankedPostsRanks, chronoPostsRanks) {
-  return new Spearman(rankedPostsRanks, chronoPostsRanks)
-    .calc()
-    .catch((err) => console.error(err));
 }
