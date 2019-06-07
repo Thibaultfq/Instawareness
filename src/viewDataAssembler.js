@@ -276,7 +276,7 @@ async function getFeedUntilDate(
     .then((r) => {
       let newNodes = r.data.user.edge_web_feed_timeline.edges;
       //do not sort it here already because there is chance on concat afterwards, which would make sorting before that useless.
-      //if all dates in the retrieved nodes are before the given date, we can assure no more content more recently than the given date will be fetched next time and we can stop fetching
+      //if all dates in the retrieved nodes are before the given date, we can assume no more content more recently than the given date will be fetched next time and we can stop fetching
       newNodes = removeGarabage(newNodes);
       let maxDateFetchedInterval = newNodes.reduce(
         (max, n) =>
