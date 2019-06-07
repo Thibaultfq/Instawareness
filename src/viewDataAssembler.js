@@ -32,10 +32,6 @@ module.exports = {
     const viewThree = await getViewThree(topPosts, allPosts);
     const viewFour = await getViewFour(topPosts, allPosts);
 
-    console.log("call save stats");
-    saveStatistics(viewTwo, viewThree, viewFour);
-
-    console.log("start returning");
     return {
       topPostsCount: consts.topSubSetCount,
       view1Name: consts.view1Name,
@@ -48,17 +44,6 @@ module.exports = {
     };
   }
 };
-
-function saveStatistics(viewTwo, viewThree, viewFour) {
-  const rankedPostsRanks = viewTwo.topPosts.map((n) => n.node.rank); //map rank
-  const chronoPostsRanks = viewTwo.chronoPosts.map((n) => n.node.rank); //map rank
-  let hiddenAmount = 0;
-  if (!viewFour.allOverlap) {
-    hiddenAmount = viewFour.allPosts.filter(
-      (n) => n.node.meta.isExcludedFromTopStories
-    ).length;
-  }
-}
 
 async function getViewFour(_topPosts, _allPosts) {
   let topPosts = [..._topPosts]; //make copy to work with.
