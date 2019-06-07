@@ -7,7 +7,7 @@ module.exports = {
     let topPostsAndCursor = await getFeedByCount(consts.topSubSetCount, insta);
     let topPosts = topPostsAndCursor.topPosts;
     let allPosts = await getFeedUntilDate(
-      topPosts[topPosts.length - 1].node.taken_at_timestamp,
+      getLeastRecentDate(topPosts),
       insta,
       JSON.parse(JSON.stringify(topPosts)), //deepclone that
       topPostsAndCursor.cursor ? topPostsAndCursor.cursor : null
@@ -278,11 +278,7 @@ async function getFeedUntilDate(
       //do not sort it here already because there is chance on concat afterwards, which would make sorting before that useless.
       //if all dates in the retrieved nodes are before the given date, we can assume no more content more recently than the given date will be fetched next time and we can stop fetching
       newNodes = removeGarabage(newNodes);
-      let maxDateFetchedInterval = newNodes.reduce(
-        (max, n) =>
-          n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max,
-        newNodes[0].node.taken_at_timestamp
-      );
+      let maxDateFetchedInterval = getMostRecentDate(newNodes);
       if (maxDateFetchedInterval >= startDateRequestedInterval) {
         //date range is still in interval we want to get all nodes from, so keep fetching
         f = f.concat(newNodes); //concat the nodes before recursion.
@@ -299,6 +295,7 @@ async function getFeedUntilDate(
     })
     .catch(function(error) {
       if (f.length >= consts.topSubSetCount) {
+        console.log(error);
         console.log(
           "returned unncompleted allstores with length of: " + f.length
         );
@@ -364,4 +361,20 @@ function addRank(posts) {
 
 function sortByMostRecent(posts) {
   posts.sort((a, b) => b.node.taken_at_timestamp - a.node.taken_at_timestamp);
+}
+
+function getMostRecentDate(nodes) {
+  return nodes.reduce(
+    (max, n) =>
+      n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max,
+    nodes[0].node.taken_at_timestamp
+  );
+}
+
+function getLeastRecentDate(nodes) {
+  return nodes.reduce(
+    (min, n) =>
+      n.node.taken_at_timestamp < min ? n.node.taken_at_timestamp : min,
+    nodes[0].node.taken_at_timestamp
+  );
 }
