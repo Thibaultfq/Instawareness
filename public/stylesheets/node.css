@@ -231,6 +231,13 @@
   white-space: normal;
 }
 
-.footer {
+.insta .footer {
   padding-bottom: 5px;
+  height: 45px;
+}
+
+.insta .footer .date {
+  line-height: 0;
+  color: #999;
+  /* text-transform: uppercase; */
 }

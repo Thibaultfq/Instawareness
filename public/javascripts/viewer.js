@@ -197,7 +197,9 @@ function getContentHighestFollowee() {
     .text()}</b> is <b>in totaal ${$highestFollowee
     .children(".badge")
     .text()} plaatsen hoger gerankt</b>. <div class="cq">
-      Wil je deze persoon ook echt vaker zien in jouw feed? Denk ook even na over het volgende: bij wie zou jij helemaal bovenaan in hun feed verschijnen?
+      Wil je ${$highestFollowee
+        .children(".user")
+        .text()} ook echt vaker zien in jouw feed? Denk ook even na over het volgende: bij wie zou jij vaker hoger in hun feed verschijnen?
     </div>
   `;
 }
@@ -210,7 +212,11 @@ function getContentLowestFollowee() {
     .text()}</b> is <b>in totaal ${$lowestFollowee
     .children(".badge")
     .text()} plaatsen lager gerankt</b>. <div class="cq">
-      Waarom denk je dat deze persoon lager gerangschikt staat in je feed? Interesseert hij/zij je minder? Ben je het eens met deze lagere rangschikking? Of heb je het gevoel dat je zo vaak posts mist?
+      Waarom denk je dat ${$lowestFollowee
+        .children(".user")
+        .text()} algemeen lager gerangschikt staat dan anderen in je feed? Interesseert ${$lowestFollowee
+    .children(".user")
+    .text()} je minder of niet? Ben je het eens met deze lagere rangschikking? Of heb je het gevoel dat je zo vaak posts mist?
     </div>`;
 }
 

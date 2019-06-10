@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var hbs = require("hbs");
+var moment = require("moment");
+moment.locale("nl-be");
 
 var indexRouter = require("./routes/index");
 
@@ -13,6 +15,11 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname, "views/partials"));
+
+var DateFormats = {
+  short: "dddd D MMMM [om] H[u]mm"
+};
+
 hbs.registerHelper("times", function(n, block) {
   var accum = "";
   for (var i = 0; i < n; ++i) accum += block.fn(i);
@@ -23,6 +30,15 @@ hbs.registerHelper("toPrecision", function(number, precision) {
 });
 hbs.registerHelper("json", function(context) {
   return JSON.stringify(context);
+});
+hbs.registerHelper("formatDate", function(datetime, format) {
+  if (moment) {
+    // can use other formats like 'lll' too
+    format = DateFormats[format] || format;
+    return moment.unix(datetime).format(format);
+  } else {
+    return datetime;
+  }
 });
 
 app.use(logger("dev"));

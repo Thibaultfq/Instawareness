@@ -12,21 +12,6 @@ module.exports = {
       JSON.parse(JSON.stringify(topPosts)), //deepclone that
       topPostsAndCursor.cursor ? topPostsAndCursor.cursor : null
     );
-    // var json = JSON.stringify({ topPosts, allPosts });
-    // fs.writeFileSync(
-    //   path.join(__dirname, "/../mockFeeds/mockFeedTF06032019.json"),
-    //   json,
-    //   "utf8"
-    // );
-    // let raw = fs.readFileSync(
-    //   path.join(__dirname, "/../mockFeeds/mockFeedTF.json")
-    // );
-    // let mock = JSON.parse(raw);
-    // let topPosts = mock.topPosts;
-    // let allPosts = mock.allPosts;
-    // topPosts.length = 50;
-    // topPosts = removeGarabage(topPosts);
-    // allPosts = removeGarabage(allPosts);
 
     const viewTwo = await getViewTwo(topPosts, allPosts);
     const viewThree = await getViewThree(topPosts, allPosts);
@@ -108,7 +93,7 @@ async function getViewTwo(_topPosts, _allPosts) {
   addRank(AllPostsChrono);
   sortByMostRecent(AllPostsChrono);
   let AllPostsChronoUntrimmed = [...AllPostsChrono];
-  AllPostsChrono.length = topPosts.length;
+  AllPostsChrono.length = topPosts.length; //trim uncurated posts to same size as curated posts list
 
   let AllPostsChronoIds = AllPostsChrono.map((n) => n.node.id);
   let maxHigherRanked = topPosts[0];
@@ -234,6 +219,7 @@ async function getViewThree(_topPosts, _allPosts) {
   Object.values(friends).forEach((f) => {
     if (f.top / f.below <= 1.5 && f.top / f.below >= 0.66) {
       //both on top and below, so they are actually equal
+      //do this first so that higher or lower ranked doesn't need to be rechecked
       friendsRankings.equal.push(f);
     } else if (f.top > f.below && f.top > f.equal) {
       friendsRankings.top.push(f);
