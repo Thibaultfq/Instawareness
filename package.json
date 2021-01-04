@@ -6,39 +6,22 @@
     "node": "10.15.0"
   },
   "scripts": {
+    "prod": "NODE_ENV=production pm2 start ./bin/www -i max --watch --name instawareness",
+    "prod-stop": "pm2 stop instawareness",
+    "prod-monit": "pm2 monit",
     "start": "node ./bin/www",
-    "live": "nodemon -e js,css,hbs,html ./bin/wwww",
-    "debug": "nodemon --inspect -e js,css,hbs,html ./bin/www"
+    "dev": "nodemon --inspect -e js,css,hbs,html ./bin/www",
+    "mock": "MOCK=true npm run dev"
   },
   "dependencies": {
-    "bluebird": "^3.5.2",
-    "camelcase-keys": "^4.2.0",
     "cookie-parser": "~1.4.3",
-    "crypto-js": "^3.1.6",
-    "debug": "~2.6.9",
     "express": "~4.16.0",
-    "express-handlebars": "^3.0.0",
-    "form-data": "^2.3.3",
-    "hbs": "4.0.4",
+    "hbs": "4.1.1",
     "http-errors": "~1.6.2",
-    "instagram-id-to-url-segment": "0.0.0",
-    "is-stream": "^1.1.0",
-    "js-md5": "^0.3.0",
-    "json-bigint": "^0.2.0",
-    "lodash": "^4.17.5",
-    "mobile-detect": "^1.4.3",
+    "instagram-nodejs-without-api": "1.2.0",
+    "mobile-detect": "1.4.4",
     "moment": "2.24.0",
-    "morgan": "~1.9.0",
-    "node-cache": "^3.0.0",
-    "node-fetch": "^2.2.0",
-    "proxy-agent": "^3.0.3",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "touch": "^1.0.0",
-    "tough-cookie": "^2.3.3",
-    "tough-cookie-file-store": "^1.2.0",
-    "underscore.string": "^3.3.5",
-    "valid-url": "^1.0.9"
+    "morgan": "~1.9.0"
   },
   "devDependencies": {}
 }

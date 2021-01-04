@@ -18,10 +18,14 @@
             <div class="card mb-4">
                 <div class="card-header" id="overlap">
                     <h5 class="mb-0">
-                        <button class="btn btn-link text-secondary" type="button" data-toggle="collapse" data-target="#collapseOverlap"
-                            aria-expanded="true" aria-controls="collapseOverlap">
-                            Van alle <span id="totalTopPosts">{{viewFour.totalCountTopPosts}}</span> posts in je feed, komen er
-                            {{viewFour.beginOverlap.topPosts.length}} posts ook terug in je feed zonder algoritme (chronologisch dus). Deze worden met andere woorden niet voor jou verborgen. </br>Klik hier om ze te bekijken.
+                        <button class="btn btn-link text-secondary" type="button" data-toggle="collapse"
+                            data-target="#collapseOverlap" aria-expanded="true" aria-controls="collapseOverlap">
+                            Based on all <span id="totalTopPosts">{{viewFour.totalCountTopPosts}}</span> posts in your
+                            feed,
+                            {{viewFour.beginOverlap.topPosts.length}} posts also appear in your feed without algorithm
+                            (i.e. chronologically). These {{viewFour.beginOverlap.topPosts.length}} are therefore not
+                            'hided' by the algorithm in case you only see the first {{viewFour.totalCountTopPosts}}
+                            posts.</br>Click here to view them.
                             <i class="fas fa-caret-down"></i>
                         </button>
                     </h5>
@@ -49,16 +53,16 @@
     </div>
 
     <div class="row">
-        <div class="offset-md-2 col-md-4 pt-3 pb-1">
-            <h4 class="text-right">
-                Jouw feed zonder algoritme <i class="fas fa-sort-numeric-down"></i>
-            </h4>
+        <div class="offset-md-2 col-md-4 pt-5 pb-1">
+            <h5 class="text-right">
+                Your feed without algortihm <i class="fas fa-sort-numeric-down"></i>
+            </h5>
         </div>
-        <div class="col-md-4 pt-3 pb-1">
-            <h4>
-                Jouw feed mét algoritme <i class="fas fa-random"></i>
-                <br>(zoals in je app)
-            </h4>
+        <div class="col-md-4 pt-5 pb-1">
+            <h5>
+                Your feed with algorithm <i class="fas fa-random"></i>
+                <br>(identical to the app)
+            </h5>
         </div>
     </div>
     {{!-- show the overlap but collapsed --}}

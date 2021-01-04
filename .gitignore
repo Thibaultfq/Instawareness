@@ -70,3 +70,4 @@ typings/
 /.vscode
 .DS_Store
 /private
+/old_code

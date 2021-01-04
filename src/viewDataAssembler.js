@@ -1,9 +1,7 @@
 let consts = require("../src/const");
-var fs = require("fs");
-var path = require("path");
 
 module.exports = {
-  getAllViewData: async function(insta) {
+  getAllViewData: async function (insta) {
     let topPostsAndCursor = await getFeedByCount(consts.topSubSetCount, insta);
     let topPosts = topPostsAndCursor.topPosts;
     let allPosts = await getFeedUntilDate(
@@ -25,9 +23,9 @@ module.exports = {
       view4Name: consts.View4Name,
       viewTwo,
       viewThree,
-      viewFour
+      viewFour,
     };
-  }
+  },
 };
 
 async function getViewFour(_topPosts, _allPosts) {
@@ -46,13 +44,11 @@ async function getViewFour(_topPosts, _allPosts) {
     //add metadata: hidden
     let indexNodeInTopPosts = topPostsIds.indexOf(n.node.id);
 
-    n.node.meta.isExcludedFromTopStories =
-      indexNodeInTopPosts > -1 ? false : true;
+    n.node.meta.isExcludedFromTopStories = indexNodeInTopPosts > -1 ? false : true;
 
     //return index to indicate overlap
     if (
-      (indexDifferentRankingStarts === -1 &&
-        n.node.id !== topPostsIds[index]) ||
+      (indexDifferentRankingStarts === -1 && n.node.id !== topPostsIds[index]) ||
       (indexDifferentRankingStarts === -1 && index == topPosts.length - 1)
     ) {
       indexDifferentRankingStarts = index;
@@ -67,14 +63,14 @@ async function getViewFour(_topPosts, _allPosts) {
     return {
       beginOverlap: { topPosts, allPosts },
       allOverlap: true,
-      totalCountTopPosts: topPosts.length
+      totalCountTopPosts: topPosts.length,
     };
   }
 
   allPosts = allPosts.slice(0, indexLastItemTopPostsInAllPosts + 1);
   const beginOverlap = {
     topPosts: topPosts.splice(0, indexDifferentRankingStarts), //the indexDifferentRankingStarts is the index where the lists start to differ. Until the previous post they can be collapsed. This index number thus gives the amount of (overlapping) posts before it in the array, since it's zero based.
-    allPosts: allPosts.splice(0, indexDifferentRankingStarts)
+    allPosts: allPosts.splice(0, indexDifferentRankingStarts),
   };
   //take the first n items that are in overlap
 
@@ -82,7 +78,7 @@ async function getViewFour(_topPosts, _allPosts) {
     beginOverlap,
     topPosts: topPosts,
     allPosts: allPosts,
-    totalCountTopPosts: beginOverlap.topPosts.length + topPosts.length
+    totalCountTopPosts: beginOverlap.topPosts.length + topPosts.length,
   };
 }
 
@@ -119,9 +115,7 @@ async function getViewTwo(_topPosts, _allPosts) {
     }
     if (indexNodeInAllPostsChrono === -1) {
       n.node.meta.isHigherRanked = true;
-      n.node.meta.howMuchHigher =
-        AllPostsChronoUntrimmed.findIndex((an) => an.node.id == n.node.id) -
-        index;
+      n.node.meta.howMuchHigher = AllPostsChronoUntrimmed.findIndex((an) => an.node.id == n.node.id) - index;
       if (n.node.meta.howMuchHigher > maxHigherRanked.node.meta.howMuchHigher) {
         maxHigherRanked = n;
       }
@@ -137,16 +131,12 @@ async function getViewTwo(_topPosts, _allPosts) {
     //not -1 because then it would be not in the list, and thus higher ranked in top posts.
   });
 
-  maxHigherRanked.node.meta.isHighestRanked = `data-highest="${
-    maxHigherRanked.node.meta.howMuchHigher
-  }"`;
-  maxLowerRanked.node.meta.isLowestRanked = `data-lowest="${
-    maxLowerRanked.node.meta.howMuchLower
-  }"`;
+  maxHigherRanked.node.meta.isHighestRanked = `data-highest="${maxHigherRanked.node.meta.howMuchHigher}"`;
+  maxLowerRanked.node.meta.isLowestRanked = `data-lowest="${maxLowerRanked.node.meta.howMuchLower}"`;
 
   return {
     topPosts: topPosts,
-    chronoPosts: AllPostsChrono
+    chronoPosts: AllPostsChrono,
   };
 }
 
@@ -158,16 +148,9 @@ async function getViewThree(_topPosts, _allPosts) {
   sortByMostRecent(allPostschrono);
   let AllPostsChronoIds = allPostschrono.map((n) => n.node.id);
 
-  let oldestInTopPosts = topPosts.reduce(
-    (min, n) =>
-      n.node.taken_at_timestamp < min.node.taken_at_timestamp ? n : min,
-    topPosts[0]
-  );
+  let oldestInTopPosts = topPosts.reduce((min, n) => (n.node.taken_at_timestamp < min.node.taken_at_timestamp ? n : min), topPosts[0]);
 
-  allPostschrono = allPostschrono.slice(
-    0,
-    allPostschrono.findIndex((n) => n.node.id === oldestInTopPosts.node.id) + 1
-  );
+  allPostschrono = allPostschrono.slice(0, allPostschrono.findIndex((n) => n.node.id === oldestInTopPosts.node.id) + 1);
 
   let friends = {};
   topPosts.forEach((n, index) => {
@@ -178,7 +161,7 @@ async function getViewThree(_topPosts, _allPosts) {
         equal: 0,
         below: 0,
         profile_pic_url: n.node.owner.profile_pic_url,
-        username: n.node.owner.username
+        username: n.node.owner.username,
       };
     }
     let indexNodeInAllPostsChrono = AllPostsChronoIds.indexOf(n.node.id); //if this is -1, the post is lower in the non-algorithm list, thus it is higher ranked by the algorithm and therefore included in top posts
@@ -214,7 +197,7 @@ async function getViewThree(_topPosts, _allPosts) {
     top: [],
     equal: [],
     below: [],
-    unknows: []
+    unknows: [],
   };
   Object.values(friends).forEach((f) => {
     if (f.top / f.below <= 1.5 && f.top / f.below >= 0.66) {
@@ -232,31 +215,22 @@ async function getViewThree(_topPosts, _allPosts) {
     }
   });
 
-  friendsRankings.top = friendsRankings.top
-    .sort((a, b) => b.top - a.top)
-    .slice(0, consts.amountOfFriends);
-  friendsRankings.equal = friendsRankings.equal
-    .sort((a, b) => b.equal - a.equal)
-    .slice(0, consts.amountOfFriends);
-  friendsRankings.below = friendsRankings.below
-    .sort((a, b) => b.below - a.below)
-    .slice(0, consts.amountOfFriends);
+  friendsRankings.top = friendsRankings.top.sort((a, b) => b.top - a.top).slice(0, consts.amountOfFriends);
+  friendsRankings.equal = friendsRankings.equal.sort((a, b) => b.equal - a.equal).slice(0, consts.amountOfFriends);
+  friendsRankings.below = friendsRankings.below.sort((a, b) => b.below - a.below).slice(0, consts.amountOfFriends);
 
-  if (!!friendsRankings.top[0] && !!friendsRankings.below[0]) {
+  if (!!friendsRankings.top[0]) {
     friendsRankings.top[0].isHighestFollowee = "data-highest-followee";
+  }
+  if (!!friendsRankings.below[0]) {
     friendsRankings.below[0].isLowestFollowee = "data-lowest-followee";
   }
   return {
-    friendsRankings
+    friendsRankings,
   };
 }
 
-async function getFeedUntilDate(
-  startDateRequestedInterval,
-  insta,
-  f = [],
-  cursor = null
-) {
+async function getFeedUntilDate(startDateRequestedInterval, insta, f = [], cursor = null) {
   return insta
     .getFeed(consts.maxItemQuery, cursor)
     .then((r) => {
@@ -268,23 +242,16 @@ async function getFeedUntilDate(
       if (maxDateFetchedInterval >= startDateRequestedInterval) {
         //date range is still in interval we want to get all nodes from, so keep fetching
         f = f.concat(newNodes); //concat the nodes before recursion.
-        return getFeedUntilDate(
-          startDateRequestedInterval,
-          insta,
-          f,
-          insta.getFeedNextPage(r)
-        );
+        return getFeedUntilDate(startDateRequestedInterval, insta, f, insta.getFeedNextPage(r));
       } else {
         //no concat needed because all fetched nodes are out of the interval we want to get all nodes from, so adding them would be unnecessary.
         return f;
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       if (f.length >= consts.topSubSetCount) {
         console.log(error);
-        console.log(
-          "returned unncompleted allstores with length of: " + f.length
-        );
+        console.log("returned unncompleted allstores with length of: " + f.length);
         return Promise.resolve(f);
       } else {
         Promise.reject(error);
@@ -292,12 +259,7 @@ async function getFeedUntilDate(
     });
 }
 
-async function getFeedByCount(
-  requestedPostCount,
-  insta,
-  f = [],
-  cursor = null
-) {
+async function getFeedByCount(requestedPostCount, insta, f = [], cursor = null) {
   return insta
     .getFeed(
       consts.maxItemQuery < requestedPostCount - f.length
@@ -309,16 +271,11 @@ async function getFeedByCount(
       f = f.concat(r.data.user.edge_web_feed_timeline.edges);
       f = removeGarabage(f);
       if (f.length < requestedPostCount) {
-        return getFeedByCount(
-          requestedPostCount,
-          insta,
-          f,
-          insta.getFeedNextPage(r)
-        );
+        return getFeedByCount(requestedPostCount, insta, f, insta.getFeedNextPage(r));
       } else {
         return {
           topPosts: f,
-          cursor: insta.getFeedNextPage(r)
+          cursor: insta.getFeedNextPage(r),
         };
       }
     });
@@ -329,16 +286,12 @@ function removeGarabage(posts) {
     (n) =>
       n.node &&
       typeof n.node.id !== "undefined" &&
-      (n.node.__typename === "GraphImage" ||
-        n.node.__typename === "GraphSidecar" ||
-        n.node.__typename === "GraphVideo")
+      (n.node.__typename === "GraphImage" || n.node.__typename === "GraphSidecar" || n.node.__typename === "GraphVideo")
   );
 }
 
 function convertToCorrectDates(posts) {
-  posts.forEach(
-    (n) => (n.node.taken_at_timestamp = n.node.taken_at_timestamp * 1000)
-  );
+  posts.forEach((n) => (n.node.taken_at_timestamp = n.node.taken_at_timestamp * 1000));
 }
 
 function addRank(posts) {
@@ -350,17 +303,9 @@ function sortByMostRecent(posts) {
 }
 
 function getMostRecentDate(nodes) {
-  return nodes.reduce(
-    (max, n) =>
-      n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max,
-    nodes[0].node.taken_at_timestamp
-  );
+  return nodes.reduce((max, n) => (n.node.taken_at_timestamp > max ? n.node.taken_at_timestamp : max), nodes[0].node.taken_at_timestamp);
 }
 
 function getLeastRecentDate(nodes) {
-  return nodes.reduce(
-    (min, n) =>
-      n.node.taken_at_timestamp < min ? n.node.taken_at_timestamp : min,
-    nodes[0].node.taken_at_timestamp
-  );
+  return nodes.reduce((min, n) => (n.node.taken_at_timestamp < min ? n.node.taken_at_timestamp : min), nodes[0].node.taken_at_timestamp);
 }
